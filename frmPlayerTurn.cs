@@ -36,7 +36,6 @@ namespace GADE_5121_POE_Project_CK
             UpdateUIForCurrentPlayer();
         }
 
-        // Method to generate random dice roll (1-6)
         private int randomRoll()
         {
             Random random = new Random();
