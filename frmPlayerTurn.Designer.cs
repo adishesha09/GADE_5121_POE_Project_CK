@@ -51,47 +51,56 @@
             grpPlayerTurn.Controls.Add(btnAttack);
             grpPlayerTurn.Controls.Add(lblPlayerHP);
             grpPlayerTurn.Font = new Font("Bahnschrift", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            grpPlayerTurn.Location = new Point(34, 32);
+            grpPlayerTurn.Location = new Point(42, 40);
+            grpPlayerTurn.Margin = new Padding(4);
             grpPlayerTurn.Name = "grpPlayerTurn";
-            grpPlayerTurn.Size = new Size(382, 356);
+            grpPlayerTurn.Padding = new Padding(4);
+            grpPlayerTurn.Size = new Size(478, 445);
             grpPlayerTurn.TabIndex = 0;
             grpPlayerTurn.TabStop = false;
             grpPlayerTurn.Text = "Player's Turn";
             // 
             // btnBlock
             // 
-            btnBlock.Location = new Point(44, 258);
+            btnBlock.Location = new Point(55, 322);
+            btnBlock.Margin = new Padding(4);
             btnBlock.Name = "btnBlock";
-            btnBlock.Size = new Size(298, 61);
+            btnBlock.Size = new Size(372, 76);
             btnBlock.TabIndex = 3;
             btnBlock.Text = "Block";
             btnBlock.UseVisualStyleBackColor = true;
+            btnBlock.Click += btnBlock_Click;
             // 
             // btnSpecialAttack
             // 
-            btnSpecialAttack.Location = new Point(44, 174);
+            btnSpecialAttack.Location = new Point(55, 218);
+            btnSpecialAttack.Margin = new Padding(4);
             btnSpecialAttack.Name = "btnSpecialAttack";
-            btnSpecialAttack.Size = new Size(298, 59);
+            btnSpecialAttack.Size = new Size(372, 74);
             btnSpecialAttack.TabIndex = 2;
             btnSpecialAttack.Text = "Special Attack";
             btnSpecialAttack.UseVisualStyleBackColor = true;
+            btnSpecialAttack.Click += btnSpecialAttack_Click;
             // 
             // btnAttack
             // 
-            btnAttack.Location = new Point(44, 90);
+            btnAttack.Location = new Point(55, 112);
+            btnAttack.Margin = new Padding(4);
             btnAttack.Name = "btnAttack";
-            btnAttack.Size = new Size(298, 62);
+            btnAttack.Size = new Size(372, 78);
             btnAttack.TabIndex = 1;
             btnAttack.Text = "Attack ";
             btnAttack.UseVisualStyleBackColor = true;
+            btnAttack.Click += btnAttack_Click;
             // 
             // lblPlayerHP
             // 
             lblPlayerHP.AutoSize = true;
             lblPlayerHP.Font = new Font("Bahnschrift", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblPlayerHP.Location = new Point(123, 42);
+            lblPlayerHP.Location = new Point(197, 41);
+            lblPlayerHP.Margin = new Padding(4, 0, 4, 0);
             lblPlayerHP.Name = "lblPlayerHP";
-            lblPlayerHP.Size = new Size(46, 28);
+            lblPlayerHP.Size = new Size(56, 34);
             lblPlayerHP.TabIndex = 0;
             lblPlayerHP.Text = "HP:";
             // 
@@ -100,9 +109,11 @@
             grpOpponent.Controls.Add(lblOpponentHP);
             grpOpponent.Controls.Add(lblOpponentDragonName);
             grpOpponent.Font = new Font("Bahnschrift", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            grpOpponent.Location = new Point(446, 91);
+            grpOpponent.Location = new Point(558, 114);
+            grpOpponent.Margin = new Padding(4);
             grpOpponent.Name = "grpOpponent";
-            grpOpponent.Size = new Size(318, 174);
+            grpOpponent.Padding = new Padding(4);
+            grpOpponent.Size = new Size(398, 218);
             grpOpponent.TabIndex = 1;
             grpOpponent.TabStop = false;
             grpOpponent.Text = "Opponent";
@@ -111,19 +122,21 @@
             // 
             lblOpponentHP.AutoSize = true;
             lblOpponentHP.Font = new Font("Bahnschrift", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblOpponentHP.Location = new Point(132, 95);
+            lblOpponentHP.Location = new Point(118, 104);
+            lblOpponentHP.Margin = new Padding(4, 0, 4, 0);
             lblOpponentHP.Name = "lblOpponentHP";
-            lblOpponentHP.Size = new Size(56, 34);
+            lblOpponentHP.Size = new Size(65, 40);
             lblOpponentHP.TabIndex = 1;
             lblOpponentHP.Text = "HP:";
             // 
             // lblOpponentDragonName
             // 
             lblOpponentDragonName.AutoSize = true;
-            lblOpponentDragonName.Font = new Font("Bahnschrift", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblOpponentDragonName.Location = new Point(69, 45);
+            lblOpponentDragonName.Font = new Font("Bahnschrift", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblOpponentDragonName.Location = new Point(86, 56);
+            lblOpponentDragonName.Margin = new Padding(4, 0, 4, 0);
             lblOpponentDragonName.Name = "lblOpponentDragonName";
-            lblOpponentDragonName.Size = new Size(193, 28);
+            lblOpponentDragonName.Size = new Size(167, 24);
             lblOpponentDragonName.TabIndex = 0;
             lblOpponentDragonName.Text = "Opponent Dragon";
             // 
@@ -131,33 +144,37 @@
             // 
             grpBattleLog.Controls.Add(txtBattleLog);
             grpBattleLog.Font = new Font("Bahnschrift", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            grpBattleLog.Location = new Point(34, 414);
+            grpBattleLog.Location = new Point(42, 518);
+            grpBattleLog.Margin = new Padding(4);
             grpBattleLog.Name = "grpBattleLog";
-            grpBattleLog.Size = new Size(730, 182);
+            grpBattleLog.Padding = new Padding(4);
+            grpBattleLog.Size = new Size(912, 228);
             grpBattleLog.TabIndex = 2;
             grpBattleLog.TabStop = false;
             grpBattleLog.Text = "Battle Log";
             // 
             // txtBattleLog
             // 
-            txtBattleLog.Location = new Point(6, 25);
+            txtBattleLog.Location = new Point(8, 31);
+            txtBattleLog.Margin = new Padding(4);
             txtBattleLog.Name = "txtBattleLog";
             txtBattleLog.ReadOnly = true;
-            txtBattleLog.Size = new Size(718, 137);
+            txtBattleLog.Size = new Size(896, 170);
             txtBattleLog.TabIndex = 0;
             txtBattleLog.Text = "";
             // 
             // frmPlayerTurn
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = (Image) resources.GetObject("$this.BackgroundImage");
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(800, 622);
+            ClientSize = new Size(1000, 778);
             Controls.Add(grpBattleLog);
             Controls.Add(grpOpponent);
             Controls.Add(grpPlayerTurn);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "frmPlayerTurn";
