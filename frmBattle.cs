@@ -28,7 +28,7 @@ namespace GADE_5121_POE_Project_CK
         string[] P1data = new string[3]; // [0] Player name, [1] Dragon name, [2] Dragon type
         string[] P2data = new string[3];
 
-        // Arrays to store dragon statistics (HP, Attack, Special Attack, Block)
+        // Arrays to store dragon statistics [0] HP, [1] Attack, [2] Special Attack, [3] Block
         int[] P1values = new int[4];
         int[] P2values = new int[4];
 
@@ -175,16 +175,6 @@ namespace GADE_5121_POE_Project_CK
             }
         }
 
-        private void frmBattle_Load(object sender, EventArgs e)
-        {
-            MusicManager.PlayBackgroundMusic("Assets/battle_music.wav");
-        }
-
-        private void frmBattle_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            MusicManager.StopBackgroundMusic();
-        }
-
         private void btnStart_Click(object sender, EventArgs e)
         {
             Form player_turn = new frmPlayerTurn(P1data, P1values, P2data, P2values);
@@ -221,6 +211,16 @@ namespace GADE_5121_POE_Project_CK
         private void CheckStartGameEnabled()
         {
             btnStart.Enabled = !btnSave1.Enabled && !btnSave2.Enabled;
+        }
+
+        private void frmBattle_Load(object sender, EventArgs e)
+        {
+            MusicManager.PlayBackgroundMusic("Assets/battle_music.wav");
+        }
+
+        private void frmBattle_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            MusicManager.StopBackgroundMusic();
         }
     }
 }

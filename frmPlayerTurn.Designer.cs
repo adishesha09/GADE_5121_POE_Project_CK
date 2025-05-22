@@ -39,6 +39,7 @@
             lblOpponentDragonName = new Label();
             grpBattleLog = new GroupBox();
             txtBattleLog = new RichTextBox();
+            btnRest = new Button();
             grpPlayerTurn.SuspendLayout();
             grpOpponent.SuspendLayout();
             grpBattleLog.SuspendLayout();
@@ -46,6 +47,7 @@
             // 
             // grpPlayerTurn
             // 
+            grpPlayerTurn.Controls.Add(btnRest);
             grpPlayerTurn.Controls.Add(btnBlock);
             grpPlayerTurn.Controls.Add(btnSpecialAttack);
             grpPlayerTurn.Controls.Add(btnAttack);
@@ -62,7 +64,7 @@
             // 
             // btnBlock
             // 
-            btnBlock.Location = new Point(55, 322);
+            btnBlock.Location = new Point(55, 270);
             btnBlock.Margin = new Padding(4);
             btnBlock.Name = "btnBlock";
             btnBlock.Size = new Size(372, 76);
@@ -73,7 +75,7 @@
             // 
             // btnSpecialAttack
             // 
-            btnSpecialAttack.Location = new Point(55, 218);
+            btnSpecialAttack.Location = new Point(55, 176);
             btnSpecialAttack.Margin = new Padding(4);
             btnSpecialAttack.Name = "btnSpecialAttack";
             btnSpecialAttack.Size = new Size(372, 74);
@@ -84,7 +86,7 @@
             // 
             // btnAttack
             // 
-            btnAttack.Location = new Point(55, 112);
+            btnAttack.Location = new Point(55, 76);
             btnAttack.Margin = new Padding(4);
             btnAttack.Name = "btnAttack";
             btnAttack.Size = new Size(372, 78);
@@ -97,7 +99,7 @@
             // 
             lblPlayerHP.AutoSize = true;
             lblPlayerHP.Font = new Font("Bahnschrift", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblPlayerHP.Location = new Point(197, 41);
+            lblPlayerHP.Location = new Point(197, 26);
             lblPlayerHP.Margin = new Padding(4, 0, 4, 0);
             lblPlayerHP.Name = "lblPlayerHP";
             lblPlayerHP.Size = new Size(56, 34);
@@ -122,7 +124,7 @@
             // 
             lblOpponentHP.AutoSize = true;
             lblOpponentHP.Font = new Font("Bahnschrift", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblOpponentHP.Location = new Point(118, 104);
+            lblOpponentHP.Location = new Point(138, 102);
             lblOpponentHP.Margin = new Padding(4, 0, 4, 0);
             lblOpponentHP.Name = "lblOpponentHP";
             lblOpponentHP.Size = new Size(65, 40);
@@ -163,6 +165,15 @@
             txtBattleLog.TabIndex = 0;
             txtBattleLog.Text = "";
             // 
+            // btnRest
+            // 
+            btnRest.Location = new Point(55, 369);
+            btnRest.Name = "btnRest";
+            btnRest.Size = new Size(372, 56);
+            btnRest.TabIndex = 4;
+            btnRest.Text = "Rest";
+            btnRest.UseVisualStyleBackColor = true;
+            // 
             // frmPlayerTurn
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -201,5 +212,6 @@
         private Label lblOpponentHP;
         private GroupBox grpBattleLog;
         private RichTextBox txtBattleLog;
+        private Button btnRest;
     }
 }

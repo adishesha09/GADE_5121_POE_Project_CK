@@ -30,12 +30,10 @@ namespace GADE_5121_POE_Project_CK
             this.player2Data = p2Data;
             this.player2Values = p2Values;
 
-            // Determine who goes first with a dice roll
-            isPlayer1Turn = (randomRoll() >= 3);
-
             UpdateUIForCurrentPlayer();
         }
 
+        // Method to generate random dice roll (1-6)
         private int randomRoll()
         {
             Random random = new Random();
@@ -124,7 +122,7 @@ namespace GADE_5121_POE_Project_CK
                 btnBlock.Text = $"Block ({player2Values[3]} reduction)";
 
                 // Highlight current player's panel
-                grpPlayerTurn.BackColor = Color.LightCyan;
+                grpPlayerTurn.BackColor = Color.LightSkyBlue;
                 grpOpponent.BackColor = SystemColors.Control;
             }
 
@@ -241,7 +239,7 @@ namespace GADE_5121_POE_Project_CK
                 UpdateUIForCurrentPlayer();
             }
 
-            UpdateAfterAction(); 
+            UpdateAfterAction();
         }
 
         private void btnBlock_Click(object sender, EventArgs e)
