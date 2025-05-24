@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPlayerTurn));
             grpPlayerTurn = new GroupBox();
+            btnRest = new Button();
             btnBlock = new Button();
             btnSpecialAttack = new Button();
             btnAttack = new Button();
@@ -39,7 +40,6 @@
             lblOpponentDragonName = new Label();
             grpBattleLog = new GroupBox();
             txtBattleLog = new RichTextBox();
-            btnRest = new Button();
             grpPlayerTurn.SuspendLayout();
             grpOpponent.SuspendLayout();
             grpBattleLog.SuspendLayout();
@@ -61,6 +61,16 @@
             grpPlayerTurn.TabIndex = 0;
             grpPlayerTurn.TabStop = false;
             grpPlayerTurn.Text = "Player's Turn";
+            // 
+            // btnRest
+            // 
+            btnRest.Location = new Point(55, 369);
+            btnRest.Name = "btnRest";
+            btnRest.Size = new Size(372, 56);
+            btnRest.TabIndex = 4;
+            btnRest.Text = "Rest";
+            btnRest.UseVisualStyleBackColor = true;
+            this.btnRest.Click += new System.EventHandler(this.btnRest_Click);
             // 
             // btnBlock
             // 
@@ -164,15 +174,6 @@
             txtBattleLog.Size = new Size(896, 170);
             txtBattleLog.TabIndex = 0;
             txtBattleLog.Text = "";
-            // 
-            // btnRest
-            // 
-            btnRest.Location = new Point(55, 369);
-            btnRest.Name = "btnRest";
-            btnRest.Size = new Size(372, 56);
-            btnRest.TabIndex = 4;
-            btnRest.Text = "Rest";
-            btnRest.UseVisualStyleBackColor = true;
             // 
             // frmPlayerTurn
             // 

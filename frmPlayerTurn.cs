@@ -19,10 +19,24 @@ namespace GADE_5121_POE_Project_CK
         private int[] player2Values;
         private bool isPlayer1Turn;
 
+        // Track turn count and resting status
+        private int turnCount = 0;
+        private bool player1NeedsRest = false;
+        private bool player2NeedsRest = false;
+        private bool isRestingPhase = false;
+
+        // New fields for tracking block status
+        private bool player1IsBlocking = false;
+        private bool player2IsBlocking = false;
+        private bool opponentBlockedLastAttack = false;
+
         // Method that passes player data
         public frmPlayerTurn(string[] p1Data, int[] p1Values, string[] p2Data, int[] p2Values)
         {
             InitializeComponent();
+
+            // Initially hide the rest button
+            btnRest.Visible = false;
 
             // Store the passed data
             this.player1Data = p1Data;
@@ -31,6 +45,32 @@ namespace GADE_5121_POE_Project_CK
             this.player2Values = p2Values;
 
             UpdateUIForCurrentPlayer();
+        }
+
+        private void Rest(bool isPlayer1)
+        {
+            string dragonName = isPlayer1 ? player1Data[1] : player2Data[1];
+            txtBattleLog.AppendText($"{dragonName} is too tired to fight, and rests a while\n");
+
+            // Reset resting flags
+            if (isPlayer1)
+                player1NeedsRest = false;
+            else
+                player2NeedsRest = false;
+
+            // Pass turn to opponent
+            isPlayer1Turn = !isPlayer1Turn; // Force turn switch
+            isRestingPhase = false; // Clear resting phase
+
+            // Update turn count and check for initiative roll
+            turnCount++;
+            if (turnCount % 2 == 0)
+            {
+                int startingPlayer = takeInitiative();
+                isPlayer1Turn = (startingPlayer == 1);
+            }
+
+            UpdateAfterAction();
         }
 
         // Method to generate random dice roll (1-6)
@@ -87,6 +127,54 @@ namespace GADE_5121_POE_Project_CK
         // Method to update UI elements based on whose turn it is
         private void UpdateUIForCurrentPlayer()
         {
+            // First check if current player's dragon is dead (Q.3.1)
+            if ((isPlayer1Turn && player1Values[0] <= 0) || (!isPlayer1Turn && player2Values[0] <= 0))
+            {
+                if (isPlayer1Turn)
+                {
+                    grpPlayerTurn.Text = $"{player1Data[0]}'s Turn";
+                    lblPlayerHP.Text = $"HP: 0";
+                    lblOpponentDragonName.Text = $"{player2Data[1]}, the {player2Data[2]} Dragon";
+                    lblOpponentHP.Text = $"HP: {player2Values[0]}";
+
+                    txtBattleLog.AppendText($"\n{player1Data[0]}'s Turn:\n");
+                    txtBattleLog.AppendText($"{player1Data[1]} is unable to continue. {player2Data[1]} is the victor!\n");
+                }
+                else
+                {
+                    grpPlayerTurn.Text = $"{player2Data[0]}'s Turn";
+                    lblPlayerHP.Text = $"HP: 0";
+                    lblOpponentDragonName.Text = $"{player1Data[1]}, the {player1Data[2]} Dragon";
+                    lblOpponentHP.Text = $"HP: {player1Values[0]}";
+
+                    txtBattleLog.AppendText($"\n{player2Data[0]}'s Turn:\n");
+                    txtBattleLog.AppendText($"{player2Data[1]} is unable to continue. {player1Data[1]} is the victor!\n");
+                }
+
+                DisableActions();
+                return;
+            }
+
+            // Handle resting state - show rest button if dragon needs to rest
+            if ((isPlayer1Turn && player1NeedsRest) || (!isPlayer1Turn && player2NeedsRest))
+            {
+                isRestingPhase = true;
+                btnAttack.Visible = false;
+                btnSpecialAttack.Visible = false;
+                btnBlock.Visible = false;
+                btnRest.Visible = true;
+                btnRest.Enabled = true;
+                btnRest.Text = "Rest";
+            }
+            else
+            {
+                isRestingPhase = false;
+                btnAttack.Visible = true;
+                btnSpecialAttack.Visible = true;
+                btnBlock.Visible = true;
+                btnRest.Visible = false;
+            }
+
             if (isPlayer1Turn)
             {
                 // Player 1's turn - update UI elements
@@ -135,10 +223,6 @@ namespace GADE_5121_POE_Project_CK
             MusicManager.StopBackgroundMusic();
         }
 
-        // New fields for tracking block status
-        private bool player1IsBlocking = false;
-        private bool player2IsBlocking = false;
-        private bool opponentBlockedLastAttack = false;
         private void btnAttack_Click(object sender, EventArgs e)
         {
             // Reset block status at start of each action
@@ -189,7 +273,7 @@ namespace GADE_5121_POE_Project_CK
                 UpdateUIForCurrentPlayer();
             }
 
-            UpdateAfterAction(); // Add this to check for game over
+            UpdateAfterAction();
         }
 
         private void btnSpecialAttack_Click(object sender, EventArgs e)
@@ -204,13 +288,17 @@ namespace GADE_5121_POE_Project_CK
                     player2Values[0] -= damageAfterBlock;
                     txtBattleLog.AppendText($"{player2Data[1]} blocked! {player1Data[1]}'s special attack was reduced to {damageAfterBlock} damage\n");
                     opponentBlockedLastAttack = true;
-                    player2IsBlocking = false; // Reset the block after it's used
+                    player2IsBlocking = false;
                 }
                 else
                 {
                     player2Values[0] -= player1Values[2];
                     txtBattleLog.AppendText($"{player1Data[1]} uses special attack on {player2Data[1]}! {player2Data[1]} takes {player1Values[2]} damage\n");
                 }
+
+                // Player 1 needs to rest next turn after using special attack
+                player1NeedsRest = true;
+                txtBattleLog.AppendText($"{player1Data[1]} is exhausted and will need to rest next turn!\n"); // Fixed: Now shows current dragon's name
             }
             else
             {
@@ -220,16 +308,19 @@ namespace GADE_5121_POE_Project_CK
                     player1Values[0] -= damageAfterBlock;
                     txtBattleLog.AppendText($"{player1Data[1]} blocked! {player2Data[1]}'s special attack was reduced to {damageAfterBlock} damage\n");
                     opponentBlockedLastAttack = true;
-                    player1IsBlocking = false; // Reset the block after it's used
+                    player1IsBlocking = false;
                 }
                 else
                 {
                     player1Values[0] -= player2Values[2];
                     txtBattleLog.AppendText($"{player2Data[1]} uses special attack on {player1Data[1]}! {player1Data[1]} takes {player2Values[2]} damage\n");
                 }
+
+                // Player 2 needs to rest next turn after using special attack
+                player2NeedsRest = true;
+                txtBattleLog.AppendText($"{player2Data[1]} is exhausted and will need to rest next turn!\n"); // Fixed: Now shows current dragon's name
             }
 
-            // Switch player turns if the attack wasn't blocked
             if (!opponentBlockedLastAttack)
             {
                 SwitchPlayerTurn();
@@ -255,9 +346,14 @@ namespace GADE_5121_POE_Project_CK
                 txtBattleLog.AppendText($"{player2Data[1]} prepares to block next attack\n");
             }
 
-            // Switch turns after blocking
             SwitchPlayerTurn();
             UpdateAfterAction();
+        }
+
+        private void btnRest_Click(object sender, EventArgs e)
+        {
+            // Call the Rest method with current player status
+            Rest(isPlayer1Turn);
         }
 
         private void UpdateAfterAction()
@@ -265,7 +361,7 @@ namespace GADE_5121_POE_Project_CK
             // Check for game over
             if (CheckGameOver()) return;
 
-            // Update UI (moved from SwitchPlayerTurn)
+            // Update UI
             UpdateUIForCurrentPlayer();
         }
 
@@ -291,11 +387,32 @@ namespace GADE_5121_POE_Project_CK
             btnAttack.Enabled = false;
             btnSpecialAttack.Enabled = false;
             btnBlock.Enabled = false;
+            btnRest.Enabled = false;
         }
+
         private void SwitchPlayerTurn()
         {
-            // Toggle the turn flag
-            isPlayer1Turn = !isPlayer1Turn;
+            // Only increment turn count if not in resting phase
+            if (!isRestingPhase)
+            {
+                turnCount++;
+            }
+
+            // Normal turn switching when not resting
+            if (!isRestingPhase)
+            {
+                // Check if we need to roll initiative (after every 2 turns)
+                if (turnCount % 2 == 0)
+                {
+                    int startingPlayer = takeInitiative();
+                    isPlayer1Turn = (startingPlayer == 1);
+                }
+                else
+                {
+                    // Toggle the turn flag normally
+                    isPlayer1Turn = !isPlayer1Turn;
+                }
+            }
 
             // Reset blocking status for the new turn player
             if (isPlayer1Turn)
