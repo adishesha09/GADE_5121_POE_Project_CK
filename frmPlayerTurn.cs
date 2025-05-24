@@ -392,7 +392,8 @@ namespace GADE_5121_POE_Project_CK
 
         private void SwitchPlayerTurn()
         {
-            // Only increment turn count if not in resting phase
+            // Only increment turn count if not in resting phase 
+            // Resting does not count as a turn for initiative purposes (Q.3.2 ambiguity)
             if (!isRestingPhase)
             {
                 turnCount++;
