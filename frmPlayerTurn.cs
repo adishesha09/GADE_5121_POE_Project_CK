@@ -164,7 +164,6 @@ namespace GADE_5121_POE_Project_CK
                 btnBlock.Visible = false;
                 btnRest.Visible = true;
                 btnRest.Enabled = true;
-                btnRest.Text = "Rest";
             }
             else
             {
