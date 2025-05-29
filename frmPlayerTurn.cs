@@ -224,9 +224,6 @@ namespace GADE_5121_POE_Project_CK
 
         private void btnAttack_Click(object sender, EventArgs e)
         {
-            // Reset block status at start of each action
-            opponentBlockedLastAttack = false;
-
             if (isPlayer1Turn)
             {
                 // Check if opponent (Player 2) is blocking
@@ -235,7 +232,6 @@ namespace GADE_5121_POE_Project_CK
                     int damageAfterBlock = Math.Max(0, player1Values[1] - player2Values[3]);
                     player2Values[0] -= damageAfterBlock;
                     txtBattleLog.AppendText($"{player2Data[1]} blocked! {player1Data[1]}'s attack was reduced to {damageAfterBlock} damage\n");
-                    opponentBlockedLastAttack = true;
                     player2IsBlocking = false; // Reset the block after it's used
                 }
                 else
@@ -252,7 +248,6 @@ namespace GADE_5121_POE_Project_CK
                     int damageAfterBlock = Math.Max(0, player2Values[1] - player1Values[3]);
                     player1Values[0] -= damageAfterBlock;
                     txtBattleLog.AppendText($"{player1Data[1]} blocked! {player2Data[1]}'s attack was reduced to {damageAfterBlock} damage\n");
-                    opponentBlockedLastAttack = true;
                     player1IsBlocking = false; // Reset the block after it's used
                 }
                 else
@@ -262,23 +257,12 @@ namespace GADE_5121_POE_Project_CK
                 }
             }
 
-            // Switch player turns if the attack wasn't blocked
-            if (!opponentBlockedLastAttack)
-            {
-                SwitchPlayerTurn();
-            }
-            else
-            {
-                UpdateUIForCurrentPlayer();
-            }
-
+            SwitchPlayerTurn();
             UpdateAfterAction();
         }
 
         private void btnSpecialAttack_Click(object sender, EventArgs e)
         {
-            opponentBlockedLastAttack = false;
-
             if (isPlayer1Turn)
             {
                 if (player2IsBlocking)
@@ -286,7 +270,6 @@ namespace GADE_5121_POE_Project_CK
                     int damageAfterBlock = Math.Max(0, player1Values[2] - player2Values[3]);
                     player2Values[0] -= damageAfterBlock;
                     txtBattleLog.AppendText($"{player2Data[1]} blocked! {player1Data[1]}'s special attack was reduced to {damageAfterBlock} damage\n");
-                    opponentBlockedLastAttack = true;
                     player2IsBlocking = false;
                 }
                 else
@@ -295,9 +278,9 @@ namespace GADE_5121_POE_Project_CK
                     txtBattleLog.AppendText($"{player1Data[1]} uses special attack on {player2Data[1]}! {player2Data[1]} takes {player1Values[2]} damage\n");
                 }
 
-                // Player 1 needs to rest next turn after using special attack
+                // Player 1 must rest next turn
                 player1NeedsRest = true;
-                txtBattleLog.AppendText($"{player1Data[1]} is exhausted and will need to rest next turn!\n"); // Fixed: Now shows current dragon's name
+                txtBattleLog.AppendText($"{player1Data[1]} is exhausted and will need to rest next turn!\n");
             }
             else
             {
@@ -306,7 +289,6 @@ namespace GADE_5121_POE_Project_CK
                     int damageAfterBlock = Math.Max(0, player2Values[2] - player1Values[3]);
                     player1Values[0] -= damageAfterBlock;
                     txtBattleLog.AppendText($"{player1Data[1]} blocked! {player2Data[1]}'s special attack was reduced to {damageAfterBlock} damage\n");
-                    opponentBlockedLastAttack = true;
                     player1IsBlocking = false;
                 }
                 else
@@ -315,20 +297,12 @@ namespace GADE_5121_POE_Project_CK
                     txtBattleLog.AppendText($"{player2Data[1]} uses special attack on {player1Data[1]}! {player1Data[1]} takes {player2Values[2]} damage\n");
                 }
 
-                // Player 2 needs to rest next turn after using special attack
+                // Player 2 must rest next turn
                 player2NeedsRest = true;
-                txtBattleLog.AppendText($"{player2Data[1]} is exhausted and will need to rest next turn!\n"); // Fixed: Now shows current dragon's name
+                txtBattleLog.AppendText($"{player2Data[1]} is exhausted and will need to rest next turn!\n");
             }
 
-            if (!opponentBlockedLastAttack)
-            {
-                SwitchPlayerTurn();
-            }
-            else
-            {
-                UpdateUIForCurrentPlayer();
-            }
-
+            SwitchPlayerTurn();
             UpdateAfterAction();
         }
 
