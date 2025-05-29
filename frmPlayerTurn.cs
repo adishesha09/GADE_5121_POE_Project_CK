@@ -127,15 +127,19 @@ namespace GADE_5121_POE_Project_CK
         // Method to update UI elements based on whose turn it is
         private void UpdateUIForCurrentPlayer()
         {
-            // First check if current player's dragon is dead (Q.3.1)
+            // Clamp HP values for display (never show negative HP)
+            int p1HP = Math.Max(0, player1Values[0]);
+            int p2HP = Math.Max(0, player2Values[0]);
+
+            // Check for game over
             if ((isPlayer1Turn && player1Values[0] <= 0) || (!isPlayer1Turn && player2Values[0] <= 0))
             {
                 if (isPlayer1Turn)
                 {
                     grpPlayerTurn.Text = $"{player1Data[0]}'s Turn";
-                    lblPlayerHP.Text = $"HP: 0";
+                    lblPlayerHP.Text = $"HP: 0"; // Display 0 even if negative
                     lblOpponentDragonName.Text = $"{player2Data[1]}, the {player2Data[2]} Dragon";
-                    lblOpponentHP.Text = $"HP: {player2Values[0]}";
+                    lblOpponentHP.Text = $"HP: {p2HP}";
 
                     txtBattleLog.AppendText($"\n{player1Data[0]}'s Turn:\n");
                     txtBattleLog.AppendText($"{player1Data[1]} is unable to continue. {player2Data[1]} is the victor!\n");
@@ -143,9 +147,9 @@ namespace GADE_5121_POE_Project_CK
                 else
                 {
                     grpPlayerTurn.Text = $"{player2Data[0]}'s Turn";
-                    lblPlayerHP.Text = $"HP: 0";
+                    lblPlayerHP.Text = $"HP: 0"; // Display 0 even if negative
                     lblOpponentDragonName.Text = $"{player1Data[1]}, the {player1Data[2]} Dragon";
-                    lblOpponentHP.Text = $"HP: {player1Values[0]}";
+                    lblOpponentHP.Text = $"HP: {p1HP}";
 
                     txtBattleLog.AppendText($"\n{player2Data[0]}'s Turn:\n");
                     txtBattleLog.AppendText($"{player2Data[1]} is unable to continue. {player1Data[1]} is the victor!\n");
@@ -155,7 +159,7 @@ namespace GADE_5121_POE_Project_CK
                 return;
             }
 
-            // Handle resting state - show rest button if dragon needs to rest
+            // Handle resting state
             if ((isPlayer1Turn && player1NeedsRest) || (!isPlayer1Turn && player2NeedsRest))
             {
                 isRestingPhase = true;
@@ -176,39 +180,31 @@ namespace GADE_5121_POE_Project_CK
 
             if (isPlayer1Turn)
             {
-                // Player 1's turn - update UI elements
+                // Player 1's turn
                 grpPlayerTurn.Text = $"{player1Data[0]}'s Turn";
-                lblPlayerHP.Text = $"HP: {player1Values[0]}";
-
-                // Set opponent (Player 2) info
+                lblPlayerHP.Text = $"HP: {p1HP}";
                 lblOpponentDragonName.Text = $"{player2Data[1]}, the {player2Data[2]} Dragon";
-                lblOpponentHP.Text = $"HP: {player2Values[0]}";
+                lblOpponentHP.Text = $"HP: {p2HP}";
 
-                // Update action buttons with player 1's values
                 btnAttack.Text = $"Attack ({player1Values[1]} damage)";
                 btnSpecialAttack.Text = $"Special Attack ({player1Values[2]} damage)";
                 btnBlock.Text = $"Block ({player1Values[3]} reduction)";
 
-                // Highlight current player's panel
                 grpPlayerTurn.BackColor = Color.LightCyan;
                 grpOpponent.BackColor = SystemColors.Control;
             }
             else
             {
-                // Player 2's turn - update UI elements
+                // Player 2's turn
                 grpPlayerTurn.Text = $"{player2Data[0]}'s Turn";
-                lblPlayerHP.Text = $"HP: {player2Values[0]}";
-
-                // Set opponent (Player 1) info
+                lblPlayerHP.Text = $"HP: {p2HP}";
                 lblOpponentDragonName.Text = $"{player1Data[1]}, the {player1Data[2]} Dragon";
-                lblOpponentHP.Text = $"HP: {player1Values[0]}";
+                lblOpponentHP.Text = $"HP: {p1HP}";
 
-                // Update action buttons with player 2's values
                 btnAttack.Text = $"Attack ({player2Values[1]} damage)";
                 btnSpecialAttack.Text = $"Special Attack ({player2Values[2]} damage)";
                 btnBlock.Text = $"Block ({player2Values[3]} reduction)";
 
-                // Highlight current player's panel
                 grpPlayerTurn.BackColor = Color.LightSkyBlue;
                 grpOpponent.BackColor = SystemColors.Control;
             }
