@@ -6,9 +6,9 @@ Welcome to **Dragon Battle**, an intense two-player, turn-based combat game wher
 
 Created as part of the GADE5121 Portfolio of Evidence, this game demonstrates fundamental programming concepts including GUI design, decision structures, arrays, methods, and more.
 
-## 🎮 How to Play
+## How to Play
 
-### 🧍‍♂️ Setup Phase
+### Setup Phase
 - **Two players** enter their names and choose one of four elemental dragons:
   - ❄️ **Ice Dragon** – Balanced stats and a solid defense.
   - 🔥 **Fire Dragon** – High attack, low HP.
